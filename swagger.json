@@ -1,0 +1,31 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "API Documentation for Employee  Detail",
+        "description": "A simple API to create and store basic employee details in a database",
+        "version": "1.0",
+        "termsOfService": "http://swagger.io/terms/",
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "Development server"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Employee",
+            "description": "Everything about employee",
+            "externalDocs": {
+                "description": "Find out more",
+                "url": "http://swagger.io"
+            }
+        }
+    ],
+    "paths": {},
+    "components": {}
+}
