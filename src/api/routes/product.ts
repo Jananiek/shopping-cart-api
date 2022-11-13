@@ -62,7 +62,7 @@ export default (app: Router): void => {
             })
             const validateProductInput = await schema.validateAsync(body);
             const result = await productService.createOne(validateProductInput);
-            return SuccessResponse(res, result, null, 200);
+            return SuccessResponse(res, result, null, 201);
         } catch (e) {
             logger.error('Create new product', {
                 module: modules.product,

@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, Index, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm';
 import { OrderProduct } from './OrderProduct';
+import { User } from './User';
 
 @Entity()
 @Unique('order_uk', ['orderNumber'])
@@ -8,24 +9,23 @@ export class Order {
   id: number;
 
   @Column()
+  @Index()
   orderNumber: string;
 
   @Column()
   orderDate: Date;
 
-  @Column({ type: 'decimal', precision: 3, scale: 2, default: 0 })
-  averageRating: number;
-
-  @Column({ type: 'decimal', precision: 6, scale: 2, default: 0 })
-  price: number;
-
-  @Column({ type: 'decimal', precision: 2, scale: 2, default: 0 })
-  discount: number;
+  @Column()
+  userId: number;
 
   @OneToMany(() => OrderProduct, orderProduct => orderProduct, {
     cascade: true
   })
-  orderProducts: OrderProduct[];
+  orderProducts!: OrderProduct[];
+
+  @OneToOne(() => User)
+  @JoinColumn()
+  user: User
 
   @CreateDateColumn()
   createdAt?: Date;

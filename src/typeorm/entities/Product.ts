@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, Index, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm';
 import { OrderProduct } from './OrderProduct';
 import { UserProductRating } from './UserProductRating';
 
@@ -9,9 +9,11 @@ export class Product {
   id: number;
 
   @Column()
+  @Index()
   productCode: string;
 
   @Column()
+  @Index()
   productName: string;
 
   @Column({ type: 'decimal', precision: 5, scale: 2, default: 0 })
