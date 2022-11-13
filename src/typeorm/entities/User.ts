@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm';
+import { UserProductRating } from './UserProductRating';
 
 @Entity()
 @Unique('user_uk', ['email'])
@@ -32,10 +33,10 @@ export class User {
   })
   public roles?: Record<string, number>;
 
-  // @OneToOne(() => Order, order => order.user, {
-  //   cascade: true,
-  // })
-  // order!: Order;
+  @OneToMany(() => UserProductRating, userRating => userRating, {
+    cascade: true,
+  })
+  userRatings!: UserProductRating[];
 
   @CreateDateColumn()
   createdAt?: Date;
