@@ -16,4 +16,9 @@ export default {
   port: parseInt(process.env.PORT, 10),
 
   env: process.env.NODE_ENV,
+
+  //this will helps to API versioning and running in parallel without effecting each others
+  api: {
+    prefix: '/v1',
+  },
 };

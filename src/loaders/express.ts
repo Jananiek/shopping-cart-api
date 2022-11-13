@@ -15,7 +15,7 @@ export default ({ app }: { app: express.Application }) => {
   app.use(bodyParser.json({ limit: '2mb' }));
 
   // Load API routes
-  app.use(config.api.prefix,routes());
+  app.use(config.api.prefix, routes());
 
   //Error handling middleware, delegate the handling to the centralized error handler
   app.use(async (err: any, req: Request, res: Response, next: NextFunction) => {
