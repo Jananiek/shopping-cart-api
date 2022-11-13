@@ -1,4 +1,8 @@
+import { Order } from '../typeorm/entities/Order';
+import { OrderProduct } from '../typeorm/entities/OrderProduct';
+import { Product } from '../typeorm/entities/Product';
 import { User } from '../typeorm/entities/User';
+import { UserProductRating } from '../typeorm/entities/UserProductRating';
 
 const config = {
   name: 'default',
@@ -10,7 +14,7 @@ const config = {
   database: process.env.DB_NAME,
   synchronize: false,
   logging: false,
-  entities: [User],
+  entities: [User,Order,OrderProduct,Product,UserProductRating],
   //entities: ['src/typeorm/entities/**.ts', 'src/typeorm/entities/**/**.ts'],
   // migrations: ['src/typeorm/migrations/*.ts'],
   seeds: ['src/typeorm/seeds/**/*{.ts,.js}'],
