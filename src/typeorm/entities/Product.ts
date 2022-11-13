@@ -14,13 +14,13 @@ export class Product {
   @Column()
   productName: string;
 
-  @Column({ type: 'decimal', precision: 3, scale: 2, default: 0 })
+  @Column({ type: 'decimal', precision: 5, scale: 2, default: 0 })
   averageRating: number;
 
-  @Column({ type: 'decimal', precision: 6, scale: 2, default: 0 })
+  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
   price: number;
 
-  @Column({ type: 'decimal', precision: 2, scale: 2, default: 0 })
+  @Column({ type: 'decimal', precision: 4, scale: 2, default: 0 })
   discount: number;
 
   @OneToMany(() => UserProductRating, productRating => productRating, {

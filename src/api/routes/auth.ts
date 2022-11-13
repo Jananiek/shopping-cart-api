@@ -21,8 +21,6 @@ export default (app: Router): void => {
         mobile: Joi.string()
           .length(10)
           .pattern(/^[0-9]+$/).messages({ 'string.pattern.base': `Phone number must have 10 digits.` }).required()
-
-
       })
       const validateUserInput = schema.validate(req.body);
       if (validateUserInput.error){
