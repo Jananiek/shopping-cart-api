@@ -28,9 +28,9 @@ export default (app: Router): void => {
       }
       passport.authenticate("local-signup", { session: false }, (err, user, info) => {
         if (err || !user) {
-           return ErrorResponse(res, { message: 'Something is not right' });
+          return ErrorResponse(res, { message: `${info?.message ? info.message : "Something is not right"}` });
         }
-         return SuccessResponse(res, user, 'User Created', 201);
+        return SuccessResponse(res, user, `${info?.message ? info.message : "User created"}`, 201);
 
       })(req, res)
     } catch (error) {
@@ -57,11 +57,11 @@ export default (app: Router): void => {
       }
       passport.authenticate("local-login", { session: false }, (err, user, info) => {
         if (err || !user) {
-          return ErrorResponse(res, { message: 'Something is not right' });
+          return ErrorResponse(res, { message: `${info?.message ? info.message :"Something is not right"}` });
         }
           // generate a signed json web token with the contents of user object and return it in the response
         const token = jwt.sign(user, 'jwt_secret', { expiresIn: 60 * 60 });
-        return SuccessResponse(res, { ...user, token }, 'User Logged in', 200);
+        return SuccessResponse(res, { ...user, token }, `${info?.message ? info.message : "User logged in"}`, 200);
 
       })(req, res)
 

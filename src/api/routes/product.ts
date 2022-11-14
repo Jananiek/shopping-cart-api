@@ -3,7 +3,7 @@ import Joi from 'joi';
 import logger, { modules } from '../../loaders/logger/index';
 import { ProductService } from '../../modules/products/services';
 import { ErrorResponse, SuccessResponse } from '../../utils/responseHandler';
-
+import { ensureAuthenticate } from '../../middleware/auth/EnsureAuthenticate';
 const route = Router();
 const productService = new ProductService()
 
@@ -22,14 +22,13 @@ export default (app: Router): void => {
                 service: 'products',
                 data: e.message,
             });
-            return ErrorResponse(res, { message: e.message },500);
+            return ErrorResponse(res, { message: e.message }, 500);
         }
     });
-
-    route.post('/:id/rate/:rate', async (req: Request, res: Response) => {
+    route.post('/:id/rate/:rate', ensureAuthenticate, async (req: Request, res: Response) => {
         try {
-            const { params: { id, rate } } = req;
-            const userId = 1 //TODO
+            const { params: { id, rate },headers } = req;
+            const userId = headers.userId ? headers.userId : undefined
             const schema = Joi.object().keys({
                 productId: Joi.number().required(),
                 userId: Joi.number().required(),
@@ -45,7 +44,7 @@ export default (app: Router): void => {
                 service: 'products',
                 data: e.message,
             });
-            return ErrorResponse(res, { message: e.message },500);
+            return ErrorResponse(res, { message: e.message }, 500);
         }
     });
 
@@ -69,7 +68,7 @@ export default (app: Router): void => {
                 service: 'products',
                 data: e.message,
             });
-            return ErrorResponse(res, { message: e.message },500);
+            return ErrorResponse(res, { message: e.message }, 500);
         }
     });
 };

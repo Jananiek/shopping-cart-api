@@ -2,6 +2,7 @@ import { Router, Request, Response } from 'express';
 import Joi from 'joi';
 import logger, { modules } from '../../loaders/logger/index';
 import { OrderService } from '../../modules/orders/services';
+import { ensureAuthenticate } from '../../middleware/auth/EnsureAuthenticate';
 import { ErrorResponse, SuccessResponse } from '../../utils/responseHandler';
 
 const route = Router();
@@ -11,10 +12,10 @@ const orderService = new OrderService()
 export default (app: Router): void => {
     app.use('/orders', route);
 
-    route.post('/', async (req: Request, res: Response) => {
+    route.post('/', ensureAuthenticate, async (req: Request, res: Response) => {
         try {
-            const { body } = req;
-            const userId = 3 //TODO
+            const { body, headers } = req;
+            const userId = headers.userId ? headers.userId : undefined
             const schema = Joi.object().keys({
                 orderNumber: Joi.string().required(),
                 orderDate: Joi.string().required(),
@@ -34,6 +35,6 @@ export default (app: Router): void => {
         }
     });
     route.post('/:id/products', async (req: Request, res: Response) => {
-      // Can add multiple products from here by calling createOrUpdateOrderProducts()
+        // Can add multiple products from here by calling createOrUpdateOrderProducts()
     });
 };
