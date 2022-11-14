@@ -12,6 +12,9 @@ const orderService = new OrderService()
 export default (app: Router): void => {
     app.use('/orders', route);
 
+    /**
+     * Create order
+     */
     route.post('/', ensureAuthenticate, async (req: Request, res: Response) => {
         try {
             const { body, headers } = req;
@@ -34,6 +37,9 @@ export default (app: Router): void => {
             return ErrorResponse(res, { message: e.message }, 500);
         }
     });
+    /**
+     * Add bulk products to created order
+     */
     route.post('/:id/products', async (req: Request, res: Response) => {
         // Can add multiple products from here by calling createOrUpdateOrderProducts()
     });

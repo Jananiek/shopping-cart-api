@@ -13,6 +13,9 @@ import { ErrorResponse, SuccessResponse } from '../../utils/responseHandler';
  */
 
 export default (app: Router): void => {
+  /**
+   * Health Check
+   */
   app.use('/health', route);
 
   route.get('/', async (req: Request, res: Response) => {

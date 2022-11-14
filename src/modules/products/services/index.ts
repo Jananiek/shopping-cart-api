@@ -13,7 +13,15 @@ export class ProductService {
     constructor() {
         this.productRepo = new ProductRepository();
     }
-
+    /**
+     * @desc prepare object with filter attributes
+     * @param {Record<string, string>} data
+     * @param {string} [data.productCode]
+     * @param {string} [data.productName]
+     * @param {number} [data.page]
+     * @param {number} [data.pageSize]
+     * @returns {IProductFilterOptions}
+     */
     public getProductFilterOptions(data: Record<string, string>): IProductFilterOptions {
         const filterOptions: IProductFilterOptions = {
             productCode: data.productCode,
@@ -23,6 +31,12 @@ export class ProductService {
         };
         return filterOptions;
     }
+
+    /**
+     * @desc Get all products with pagination
+     * @param {Record<string, any>} query 
+     * @returns {IResponseListResult<Product>}
+     */
     public async getAll(query: Record<string, any>): Promise<IResponseListResult<Product>> {
         try {
             const filterOptions = this.getProductFilterOptions(query);
@@ -43,10 +57,23 @@ export class ProductService {
         }
     }
 
+    /**
+     * @desc Create product
+     * @param {Product} product input product object
+     * @returns {Product}
+     */
     public async createOne(product: Product): Promise<Product> {
         return await this.productRepo.createOne(product)
     }
 
+    /**
+     * @desc Add rating for a specific product by product id
+     * @param {IProductRating} productRating
+     * @param {number} [productRating.productId]
+     * @param {number} [productRating.userId]
+     * @param {number} [productRating.userRating]
+     * @returns {UserProductRating}
+     */
     public async addProductRating(productRating: IProductRating): Promise<UserProductRating> {
         return await this.productRepo.addProductRating(productRating)
     }
