@@ -40,7 +40,7 @@ export default (app: Router): void => {
                 userRating: Joi.number().required(),
 
             })
-            const validateProductInput = await schema.validateAsync({ productId: id, userId, userRating: rate });
+            const validateProductInput = await schema.validateAsync({ productId: id,userId, userRating: rate });
             const result = await productService.addProductRating(validateProductInput);
             return SuccessResponse(res, result, null, 201);
         } catch (e) {
