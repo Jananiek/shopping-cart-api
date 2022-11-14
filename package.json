@@ -1,15 +1,15 @@
 {
-  "name": "employee-api",
-  "description": "API to perform queries related to employee",
+  "name": "shopping-cart-api",
+  "description": "API to perform queries related to shopping cart",
   "version": "1.0.0",
   "main": "src/app.ts",
   "license": "MIT",
   "author": "Jananie Wathsala",
   "scripts": {
     "build": "tsc -p .",
-    "start": "nodemon",
-    "start-dev": "cross-env NODE_ENV=development ts-node src/app.ts",
-    "start-prod": "cross-env NODE_ENV=production ts-node src/app.ts",
+    "start": "set NODE_ENV=development&& ts-node src/app.ts",
+    "start:dev": "set NODE_ENV=development&& nodemon",
+    "start:prod": "set NODE_ENV=production&& ts-node src/app.ts",
     "lint": "npm run lint:js",
     "schema:sync": "ts-node ./node_modules/typeorm/cli.js schema:sync --config ./src/config/ormconfig.ts"
   },

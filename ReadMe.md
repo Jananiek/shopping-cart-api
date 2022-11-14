@@ -6,6 +6,7 @@ This project is build with Node.js, PostgreSQL.
 Other specific libraries used:
 - Joi : Object validations [Read more here](https://joi.dev/api/?v=17.7.0#defaultsmodifierr)
 -  typeorm : ORM that can run in NodeJS [Read more here](https://typeorm.io/)
+-  passport : Authentication middleware for NodeJS. [Read more about passport-local & passport-jwt here ](https://www.passportjs.org/packages/)
 - winston : For logging purposes [Read more here](https://www.npmjs.com/package/winston)
 ## Development
 
@@ -39,13 +40,13 @@ It uses nodemon for livereloading :peace-fingers:
 
 - clone the `shopping-cart-api` repo.
 - install the dependencies.
-- run `cp .env.example .env`.
-- configure database credentials with yours in ` .env` file
-- to run with nodemon `yarn run start` or to run in locally `yarn run start-dev`.
+- run `cp .env.example development.env`.
+- configure database credentials with yours in ` development.env` file
+- to run with nodemon `yarn run start:dev` or to run in locally `yarn run start`.
 ### Run in different environment:
-- run `cp .env.example .env.production`
-- configure database credentials with yours in ` .env.production` file
-- run `yarn run start-prod`.
+- run `cp .env.example production.env`
+- configure database credentials with yours in ` production.env` file
+- run `yarn run start:prod`.
 
 **Example error**
 
@@ -69,6 +70,7 @@ It uses nodemon for livereloading :peace-fingers:
 ```
 # Api Reference
 - After running the project go to `(http://localhost:8000/v1/api/apidoc)` to view API documentation
+- Can check on heroku `(https://jkshoppingcartnodejs.herokuapp.com/v1/api/apidoc)` to test APIs paths.
 
 # Database
 - Used PostgreSQL along with TypeORM as ORM.
