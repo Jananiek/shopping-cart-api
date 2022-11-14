@@ -1,8 +1,8 @@
 {
     "openapi": "3.0.2",
     "info": {
-        "title": "API Documentation for Employee  Detail",
-        "description": "A simple API to create and store basic employee details in a database",
+        "title": "API Documentation for Shopping Cart",
+        "description": "A simple API to Shopping cart",
         "version": "1.0",
         "termsOfService": "http://swagger.io/terms/",
         "license": {
@@ -12,20 +12,600 @@
     },
     "servers": [
         {
-            "url": "http://localhost:8000",
+            "url": "http://localhost:8000/v1",
             "description": "Development server"
+        },
+        {
+            "url": "http://localhost:8001/v1",
+            "description": "Production server"
         }
     ],
     "tags": [
         {
-            "name": "Employee",
-            "description": "Everything about employee",
-            "externalDocs": {
-                "description": "Find out more",
-                "url": "http://swagger.io"
-            }
+            "name": "Auth",
+            "description": "Everything about Authentication & Authorization"
+        },
+        {
+            "name": "Product",
+            "description": "Everything about products"
+        },
+        {
+            "name": "Order",
+            "description": "Everything about Orders"
         }
     ],
-    "paths": {},
-    "components": {}
+    "paths": {
+        "/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "description": "Register new user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "test@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password"
+                                    },
+                                    "mobile": {
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json; charset=utf-8": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "description": "whether operations was success or not"
+                                        },
+                                        "data": {
+                                            "type": "boolean",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number"
+                                                }
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": ""
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "description": "Login new user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "test@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json; charset=utf-8": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "description": "whether operations was success or not"
+                                        },
+                                        "data": {
+                                            "type": "boolean",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number"
+                                                },
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "token": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": ""
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/products": {
+            "get": {
+                "tags": [
+                    "product"
+                ],
+                "description": "Get All products",
+                "parameters": [
+                    {
+                        "name": "filters",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "page": {
+                                    "type": "number",
+                                    "example": 1
+                                },
+                                "pageSize": {
+                                    "type": "number",
+                                    "example": 10
+                                },
+                                "productCode": {
+                                    "type": "string",
+                                    "example": ""
+                                },
+                                "productName": {
+                                    "type": "string",
+                                    "example": "13 Coins"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json; charset=utf-8": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "description": "whether operations was success or not"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "$ref": "#/components/schemas/Product"
+                                                },
+                                                "pagination": {
+                                                    "$ref": "#/components/schemas/Pagination"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "description": "Create product",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Product"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json; charset=utf-8": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "description": "whether operations was success or not"
+                                        },
+                                        "data": {
+                                            "type": "boolean",
+                                            "$ref": "#/components/schemas/Product"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/products/{id}/rate/{rate}": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "description": "Add or update product rate",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Product Id",
+                        "schema": {
+                            "type": "number",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "rate",
+                        "in": "path",
+                        "required": true,
+                        "description": "rate value",
+                        "schema": {
+                            "type": "number",
+                            "example": 2.3
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json; charset=utf-8": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "description": "whether operations was success or not"
+                                        },
+                                        "data": {
+                                            "type": "boolean",
+                                            "$ref": "#/components/schemas/UserProductRating"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orders": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "description": "Create new order",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OrderInputBody"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json; charset=utf-8": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "description": "whether operations was success or not"
+                                        },
+                                        "data": {
+                                            "type": "boolean",
+                                            "$ref": "#/components/schemas/Order"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Pagination": {
+                "type": "object",
+                "properties": {
+                    "pages": {
+                        "type": "number"
+                    },
+                    "pageSize": {
+                        "type": "number"
+                    },
+                    "items": {
+                        "type": "number"
+                    },
+                    "currentPage": {
+                        "type": "number"
+                    }
+                }
+            },
+            "Error": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example":false
+                    },
+                    "data": {
+                        "type": "object",
+                        "properties": {
+                            "errorMessage": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "Product": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": 1329
+                    },
+                    "productCode": {
+                        "type": "string",
+                        "example": "12345"
+                    },
+                    "productName": {
+                        "type": "string",
+                        "example": "'DRY LIGHT IMPORTED WIN"
+                    },
+                    "averageRating": {
+                        "type": "number",
+                        "example": 13.5
+                    },
+                    "price": {
+                        "type": "number",
+                        "example": "200"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "example": "2022-08-29T20:21:57.174Z"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "example": "2022-08-29T20:21:57.174Z"
+                    }
+                }
+            },
+            "UserProductRating": {
+                "type": "object",
+                "properties": {
+                    "productId": {
+                        "type": "number",
+                        "example": 2
+                    },
+                    "userId": {
+                        "type": "number",
+                        "example": 1
+                    },
+                    "userRating": {
+                        "type": "number",
+                        "example": 2.3
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "example": "2022-08-29T20:21:57.174Z"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "example": "2022-08-29T20:21:57.174Z"
+                    }
+                }
+            },
+            "Order": {
+                "type": "object",
+                "properties": {
+                    "orderNumber": {
+                        "type": "string",
+                        "example": 1329
+                    },
+                    "orderDate": {
+                        "type": "string",
+                        "example": "2022-08-29T20:21:57.174Z"
+                    },
+                    "userId": {
+                        "type": "number",
+                        "example": 1
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "example": "2022-08-29T20:21:57.174Z"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "example": "2022-08-29T20:21:57.174Z"
+                    }
+                }
+            },
+            "OrderInputBody": {
+                "type": "object",
+                "properties": {
+                    "orderNumber": {
+                        "type": "string",
+                        "example": 1329
+                    },
+                    "orderDate": {
+                        "type": "string",
+                        "example": "2022-08-29T20:21:57.174Z"
+                    }
+                }
+            }
+        }
+    }
 }
