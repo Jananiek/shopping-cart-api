@@ -1,4 +1,4 @@
-# Food delivery through restaurants API 🛡️
+# Shopping cart API 🛡️
 
 This is a rest API repository to perform queries related to shopping cart.
 ## Build With
