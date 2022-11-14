@@ -8,6 +8,8 @@
   "scripts": {
     "build": "tsc -p .",
     "start": "nodemon",
+    "start-dev": "cross-env NODE_ENV=development ts-node src/app.ts",
+    "start-prod": "cross-env NODE_ENV=production ts-node src/app.ts",
     "lint": "npm run lint:js",
     "schema:sync": "ts-node ./node_modules/typeorm/cli.js schema:sync --config ./src/config/ormconfig.ts"
   },
@@ -36,6 +38,7 @@
     "@types/node": "^16.11.3",
     "@typescript-eslint/eslint-plugin": "^4.2.0",
     "@typescript-eslint/parser": "^4.2.0",
+    "cross-env": "^7.0.3",
     "eslint": "^7.9.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",

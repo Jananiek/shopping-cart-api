@@ -12,6 +12,9 @@ const ExtractJWT = passportJWT.ExtractJwt;
 
 
 module.exports = (passport) => {
+    /**
+     * User sign up using passport local strategy
+     */
     passport.use(
         "local-signup",
         new LocalStrategy(
@@ -35,7 +38,9 @@ module.exports = (passport) => {
             }
         )
     );
-
+/**
+ * User login using passport local strategy
+ */
     passport.use(
         "local-login",
         new LocalStrategy(
@@ -56,7 +61,9 @@ module.exports = (passport) => {
             }
         )
     );
-
+/**
+ * User authenticate using passport jwt strategy
+ */
     passport.use(
         "jwt",
         new JWTStrategy({

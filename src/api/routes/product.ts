@@ -10,7 +10,9 @@ const productService = new ProductService()
 
 export default (app: Router): void => {
     app.use('/products', route);
-
+/**
+ * Get All Products
+ */
     route.get('/', async (req: Request, res: Response) => {
         try {
             const { query } = req;
@@ -25,6 +27,9 @@ export default (app: Router): void => {
             return ErrorResponse(res, { message: e.message }, 500);
         }
     });
+    /**
+     * Add product rate by login user
+     */
     route.post('/:id/rate/:rate', ensureAuthenticate, async (req: Request, res: Response) => {
         try {
             const { params: { id, rate },headers } = req;
@@ -48,6 +53,9 @@ export default (app: Router): void => {
         }
     });
 
+    /**
+     * Create Product
+     */
     route.post('/', async (req: Request, res: Response) => {
         try {
             const { body } = req;

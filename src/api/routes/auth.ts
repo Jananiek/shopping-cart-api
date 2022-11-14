@@ -10,7 +10,9 @@ const route = Router();
 
 export default (app: Router): void => {
   app.use('/', route);
-
+  /**
+   * User Register
+  */
   route.post('/register', function (req: Request, res: Response) {
     try {
       const schema = Joi.object().keys({
@@ -23,7 +25,7 @@ export default (app: Router): void => {
           .pattern(/^[0-9]+$/).messages({ 'string.pattern.base': `Phone number must have 10 digits.` }).required()
       })
       const validateUserInput = schema.validate(req.body);
-      if (validateUserInput.error){
+      if (validateUserInput.error) {
         return ErrorResponse(res, { message: validateUserInput.error.message });
       }
       passport.authenticate("local-signup", { session: false }, (err, user, info) => {
@@ -42,7 +44,9 @@ export default (app: Router): void => {
       return ErrorResponse(res, { message: error.message });
     }
   });
- 
+/**
+ * Login User
+ */
   route.post('/login', function (req: Request, res: Response) {
     try {
       const schema = Joi.object().keys({
@@ -57,9 +61,9 @@ export default (app: Router): void => {
       }
       passport.authenticate("local-login", { session: false }, (err, user, info) => {
         if (err || !user) {
-          return ErrorResponse(res, { message: `${info?.message ? info.message :"Something is not right"}` });
+          return ErrorResponse(res, { message: `${info?.message ? info.message : "Something is not right"}` });
         }
-          // generate a signed json web token with the contents of user object and return it in the response
+        // generate a signed json web token with the contents of user object and return it in the response
         const token = jwt.sign(user, 'jwt_secret', { expiresIn: 60 * 60 });
         return SuccessResponse(res, { ...user, token }, `${info?.message ? info.message : "User logged in"}`, 200);
 
@@ -74,6 +78,6 @@ export default (app: Router): void => {
       return ErrorResponse(res, { message: error.message });
     }
   });
- 
+
 };
 
