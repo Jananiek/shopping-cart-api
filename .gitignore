@@ -6,6 +6,6 @@
 
 *.log
 .env
-.env.development
-.env.production
+development.env
+production.env
 build
